@@ -1,0 +1,41 @@
+{
+  "name": "10up/wpinstructions",
+  "description": "Run human-readable WordPress commands",
+  "keywords": ["create wordpress environment"],
+  "license": ["MIT"],
+  "authors": [
+    {
+      "name": "Taylor Lovett",
+      "email": "taylor.lovett@10up.com"
+    }
+  ],
+  "require": {
+    "symfony/console": "^3.3",
+    "php": ">=7.2",
+    "rmccue/requests": "^1.7",
+    "10up/wpsnapshots": "^1.5",
+    "symfony/process": "^4.2"
+  },
+  "bin": [
+    "bin/wpinstructions"
+  ],
+  "autoload": {
+    "files": [
+      "src/utils.php"
+    ],
+    "psr-4": {
+      "WPInstructions\\": "./src/classes"
+    }
+  },
+  "scripts": {
+    "lint": [
+      "phpcs --runtime-set testVersion 7.2- ."
+    ],
+    "lint-fix": [
+      "phpcbf --runtime-set testVersion 7.2- ."
+    ]
+  },
+  "require-dev": {
+    "10up/phpcs-composer": "dev-master"
+  }
+}
