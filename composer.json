@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "symfony/console": "^3.3",
+    "symfony/console": "~4.1",
     "php": ">=7.2",
     "rmccue/requests": "^1.7",
     "10up/wpsnapshots": "dev-master",
