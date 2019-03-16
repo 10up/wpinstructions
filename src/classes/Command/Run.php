@@ -33,12 +33,16 @@ class Run extends Command {
 		$this->setDescription( 'Run a set of instructions.' );
 
 		$this->addOption( 'path', null, InputOption::VALUE_REQUIRED, 'Path to WordPress.' );
+
 		$this->addOption( 'config_db_host', null, InputOption::VALUE_REQUIRED, 'Config database host. Used if installing WordPress.' );
 		$this->addOption( 'config_db_name', null, InputOption::VALUE_REQUIRED, 'Config database name. Used if installing WordPress.' );
 		$this->addOption( 'config_db_user', null, InputOption::VALUE_REQUIRED, 'Config database user. Used if installing WordPress.' );
 		$this->addOption( 'config_db_password', null, InputOption::VALUE_REQUIRED, 'Config database password. Used if installing WordPress.' );
 
 		$this->addOption( 'db_host', null, InputOption::VALUE_REQUIRED, 'Database host. Use this if you need a different DB host for connecting than what is in wp-config.php' );
+
+		$this->addOption( 'home_url', null, InputOption::VALUE_REQUIRED, 'Explicitly set home URL. Will overwrite whatever is in install WordPress instruction.' );
+		$this->addOption( 'site_url', null, InputOption::VALUE_REQUIRED, 'Explicitly set site URL. Will overwrite whatever is in install WordPress instruction.' );
 	}
 
 	/**
@@ -78,6 +82,14 @@ class Run extends Command {
 
 		if ( ! empty( $input->getOption( 'config_db_password' ) ) ) {
 			$args['config_db_password'] = $input->getOption( 'config_db_password' );
+		}
+
+		if ( ! empty( $input->getOption( 'site_url' ) ) ) {
+			$args['site_url'] = $input->getOption( 'site_url' );
+		}
+
+		if ( ! empty( $input->getOption( 'home_url' ) ) ) {
+			$args['home_url'] = $input->getOption( 'home_url' );
 		}
 
 		$instructions_text = file_get_contents( getcwd() . '/WPInstructions' );

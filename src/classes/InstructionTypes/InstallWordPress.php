@@ -108,6 +108,14 @@ class InstallWordPress extends InstructionType {
 			$options['site url'] = $options['home url'];
 		}
 
+		if ( ! empty( $global_args['site_url'] ) ) {
+			$options['site url'] = $global_args['site_url'];
+		}
+
+		if ( ! empty( $global_args['home_url'] ) ) {
+			$options['home url'] = $global_args['home_url'];
+		}
+
 		$skip_wpcontent = false;
 
 		if ( WPSnapshots\Utils\is_wp_present( $global_args['path'] ) ) {
