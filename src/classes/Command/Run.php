@@ -83,6 +83,7 @@ class Run extends Command {
 		$instructions_text = file_get_contents( getcwd() . '/WPInstructions' );
 
 		$instructions = new Instructions( $instructions_text, $args );
+		$instructions->build();
 		$instructions->runAll();
 
 		Log::instance()->write( 'Done.', 0, 'success' );

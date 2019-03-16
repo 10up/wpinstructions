@@ -26,6 +26,13 @@ class Instructions {
 	protected $text;
 
 	/**
+	 * Array of instructions
+	 *
+	 * @var instructions
+	 */
+	protected $instructions = [];
+
+	/**
 	 * Create Instructions object
 	 *
 	 * @param string $text        All instructions text
@@ -37,11 +44,9 @@ class Instructions {
 	}
 
 	/**
-	 * Run all instructions
-	 *
-	 * @return boolean True is success
+	 * Build instructions array
 	 */
-	public function runAll() {
+	public function build() {
 		$lines = explode( "\n", $this->text );
 
 		foreach ( $lines as $line ) {
@@ -52,17 +57,27 @@ class Instructions {
 					continue;
 				}
 
-				Log::instance()->write( 'Running instruction: ' . $line, 1 );
+				$this->instructions[] = Instruction::createFromText( $line, $this->global_args );
+			}
+		}
+	}
 
-				$instruction_result = $this->run( $line );
+	/**
+	 * Run all instructions
+	 *
+	 * @return boolean True is success
+	 */
+	public function runAll() {
 
-				if ( 1 === $instruction_result ) {
-					Log::instance()->write( 'Instruction `' . $line . '` did not complete successfully.', 0, 'error' );
+		foreach ( $this->instructions as $instruction ) {
+			$instruction_result = $instruction->run();
 
-					return false;
-				} elseif ( 2 === $instruction_result ) {
-					Log::instance()->write( 'Instruction `' . $line . '` was skipped.', 0, 'warning' );
-				}
+			if ( 1 === $instruction_result ) {
+				Log::instance()->write( 'Instruction `' . $line . '` did not complete successfully.', 0, 'error' );
+
+				return false;
+			} elseif ( 2 === $instruction_result ) {
+				Log::instance()->write( 'Instruction `' . $line . '` was skipped.', 0, 'warning' );
 			}
 		}
 
@@ -70,14 +85,11 @@ class Instructions {
 	}
 
 	/**
-	 * Run a single instruction
+	 * Get Instructions
 	 *
-	 * @param  string $text Raw instruction text
-	 * @return integer
+	 * @return array
 	 */
-	public function run( string $text ) {
-		$instruction = Instruction::createFromText( $text, $this->global_args );
-
-		return $instruction->run();
+	public function getInstructions() {
+		return $this->instructions;
 	}
 }

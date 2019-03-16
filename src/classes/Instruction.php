@@ -178,4 +178,40 @@ class Instruction {
 
 		return self::$registered_instruction_types[ $this->action ]->run( $prepared_options, $this->global_args );
 	}
+
+	/**
+	 * Return instruction text
+	 *
+	 * @return  string
+	 */
+	public function getText() {
+		return $this->text;
+	}
+
+	/**
+	 * Return instruction options
+	 *
+	 * @return  array
+	 */
+	public function getOptions() {
+		return $this->text;
+	}
+
+	/**
+	 * Return instruction action
+	 *
+	 * @return string
+	 */
+	public function getAction() {
+		return $this->action;
+	}
+
+	/**
+	 * Return instruction global args
+	 *
+	 * @return array
+	 */
+	public function getGlobalArgs() {
+		return $this->global_args;
+	}
 }
