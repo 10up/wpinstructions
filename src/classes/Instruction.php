@@ -213,6 +213,15 @@ class Instruction {
 	}
 
 	/**
+	 * Return instruction prepared options
+	 *
+	 * @return  array
+	 */
+	public function getPreparedOptions() {
+		return $this->prepared_options;
+	}
+
+	/**
 	 * Return instruction action
 	 *
 	 * @return string
