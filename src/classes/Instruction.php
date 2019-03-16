@@ -194,7 +194,7 @@ class Instruction {
 	 * @return  array
 	 */
 	public function getOptions() {
-		return $this->text;
+		return $this->options;
 	}
 
 	/**
