@@ -47,8 +47,8 @@ class InstallWordPress extends InstructionType {
 	protected $defaults = [
 		'version'        => 'latest',
 		'site title'     => 'Test Site',
-		'site url'       => 'http://localhost',
-		'home url'       => 'http://localhost',
+		'site url'       => '',
+		'home url'       => '',
 		'admin email'    => 'test@test.com',
 		'admin user'     => 'admin',
 		'admin password' => 'password',
@@ -98,6 +98,15 @@ class InstallWordPress extends InstructionType {
 	 */
 	public function run( array $options, array $global_args = [] ) {
 		Log::instance()->write( 'Downloading WordPress...', 1 );
+
+		if ( empty( $options['site url'] ) && empty( $options['home url'] ) ) {
+			$options['site url'] = 'http://localhost';
+			$options['home url'] = $options['site url'];
+		} elseif ( ! empty( $options['site url'] ) && empty( $options['home url'] ) ) {
+			$options['home url'] = $options['site url'];
+		} elseif ( empty( $options['site url'] ) && ! empty( $options['home url'] ) ) {
+			$options['site url'] = $options['home url'];
+		}
 
 		$skip_wpcontent = false;
 
