@@ -46,7 +46,7 @@ class Instructions {
 	/**
 	 * Build instructions array
 	 */
-	public function build() {
+	public function prepare() {
 		$lines = explode( "\n", $this->text );
 
 		foreach ( $lines as $line ) {
@@ -70,6 +70,8 @@ class Instructions {
 	public function runAll() {
 
 		foreach ( $this->instructions as $instruction ) {
+			$instruction->prepare();
+
 			$instruction_result = $instruction->run();
 
 			if ( 1 === $instruction_result ) {

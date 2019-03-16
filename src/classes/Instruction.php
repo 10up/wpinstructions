@@ -51,6 +51,13 @@ class Instruction {
 	protected $text;
 
 	/**
+	 * Prepared options
+	 *
+	 * @var array
+	 */
+	protected $prepared_options;
+
+	/**
 	 * Register an instruction type
 	 *
 	 * @param  InstructionType $instruction_type Instruction type
@@ -143,16 +150,29 @@ class Instruction {
 	}
 
 	/**
-	 * Run the instruction
+	 * Prepare instruction to be ran
 	 *
 	 * @throws InstructionTypeInvalid Instruction type not registered
-	 * @return integer 0 means success
 	 */
-	public function run() {
+	public function prepare() {
 		if ( empty( self::$registered_instruction_types[ $this->action ] ) ) {
 			throw new InstructionTypeInvalid();
 		}
 
+		$instruction_type = self::$registered_instruction_types[ $this->action ];
+
+		$this->prepared_options = $instruction_type->prepareOptions( $this->options );
+
+		Log::instance()->write( 'Prepared options:', 2 );
+		Log::instance()->write( print_r( $this->prepared_options, true ), 2 );
+	}
+
+	/**
+	 * Run the instruction
+	 *
+	 * @return integer 0 means success
+	 */
+	public function run() {
 		Log::instance()->write( 'Running instruction with action ' . $this->action, 1 );
 
 		$instruction_type = self::$registered_instruction_types[ $this->action ];
@@ -171,12 +191,7 @@ class Instruction {
 			}
 		}
 
-		$prepared_options = $instruction_type->prepareOptions( $this->options );
-
-		Log::instance()->write( 'Prepared options:', 2 );
-		Log::instance()->write( print_r( $prepared_options, true ), 2 );
-
-		return self::$registered_instruction_types[ $this->action ]->run( $prepared_options, $this->global_args );
+		return self::$registered_instruction_types[ $this->action ]->run( $this->prepared_options, $this->global_args );
 	}
 
 	/**
