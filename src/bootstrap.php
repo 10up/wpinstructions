@@ -21,6 +21,7 @@ ini_set( 'memory_limit', '-1' );
 Instruction::registerInstructionType( new InstructionTypes\InstallWordPress() );
 Instruction::registerInstructionType( new InstructionTypes\InstallPlugin() );
 Instruction::registerInstructionType( new InstructionTypes\InstallTheme() );
+Instruction::registerInstructionType( new InstructionTypes\AddSite() );
 
 $app->add( new Command\Run() );
 

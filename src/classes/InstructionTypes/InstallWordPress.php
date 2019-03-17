@@ -15,6 +15,7 @@ namespace WPInstructions\InstructionTypes;
 use WPInstructions\InstructionType;
 use WPInstructions\Log;
 use WPInstructions\Utils;
+use WPInstructions\UtilsWP;
 use WPInstructions\WordPressBridge;
 use Symfony\Component\Process\Process;
 use WPSnapshots;
@@ -74,11 +75,13 @@ class InstallWordPress extends InstructionType {
 				return 'admin email';
 			case 'password':
 			case 'pass':
+			case 'admin pass':
 				return 'admin password';
 			case 'title':
 			case 'blog title':
 				return 'site title';
 			case 'home':
+			case 'url':
 				return 'home url';
 			case 'site':
 				return 'site url';
@@ -242,6 +245,11 @@ class InstallWordPress extends InstructionType {
 			}
 		}
 
+		/**
+		 * Todo: If WP files are present with wp-config.php with MS constants BUT no tables exist. Bridge will fail since
+		 * MS tables don't exist yet.
+		 */
+
 		$extras = [];
 
 		if ( ! empty( $global_args['db_host'] ) ) {
@@ -296,7 +304,7 @@ class InstallWordPress extends InstructionType {
 				'WP_ALLOW_MULTISITE'   => true,
 				'MULTISITE'            => true,
 				'SUBDOMAIN_INSTALL'    => false,
-				'DOMAIN_CURRENT_SITE'  => '',
+				'DOMAIN_CURRENT_SITE'  => $domain,
 				'PATH_CURRENT_SITE'    => '/',
 				'SITE_ID_CURRENT_SITE' => 1,
 				'BLOG_ID_CURRENT_SITE' => 1,
@@ -306,7 +314,7 @@ class InstallWordPress extends InstructionType {
 
 			$site_user = get_user_by( 'email', $options['admin email'] );
 
-			$this->add_site_admins( $site_user );
+			UtilsWP\add_site_admins( $site_user );
 
 			update_site_option( 'siteurl', esc_url_raw( $options['site url'] ) );
 			update_site_option( 'home', esc_url_raw( $options['home url'] ) );
@@ -316,26 +324,5 @@ class InstallWordPress extends InstructionType {
 		}
 
 		return 0;
-	}
-
-	/**
-	 * Add site admins to install
-	 *
-	 * @param WP_User $site_user User to add
-	 */
-	private function add_site_admins( WP_User $site_user ) {
-		$site_admins = array( $site_user->user_login );
-
-		$users = get_users( array( 'fields' => array( 'ID', 'user_login' ) ) );
-
-		if ( $users ) {
-			foreach ( $users as $user ) {
-				if ( is_super_admin( $user->ID ) && ! in_array( $user->user_login, $site_admins, true ) ) {
-					$site_admins[] = $user->user_login;
-				}
-			}
-		}
-
-		update_site_option( 'site_admins', $site_admins );
 	}
 }

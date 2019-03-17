@@ -21,7 +21,8 @@
   ],
   "autoload": {
     "files": [
-      "src/utils.php"
+      "src/utils.php",
+      "src/utils-wp.php"
     ],
     "psr-4": {
       "WPInstructions\\": "./src/classes"
