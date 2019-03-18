@@ -122,7 +122,7 @@ class AddSite extends InstructionType {
 			$path       = get_network()->path;
 		} else {
 			$new_domain = get_network()->domain;
-			$path       = get_network()->path . parse_url( $options['home url'], PHP_URL_PATH ) . '/';
+			$path       = rtrim( get_network()->path . parse_url( $options['home url'], PHP_URL_PATH ), '/' ) . '/';
 		}
 
 		$meta = [
@@ -134,6 +134,9 @@ class AddSite extends InstructionType {
 		if ( ! is_super_admin( $user->ID ) ) {
 			UtilsWP\add_site_admins( $user );
 		}
+
+		update_blog_option( $id, 'home', $options['home url'] );
+		update_blog_option( $id, 'siteurl', $options['home url'] );
 
 		Log::instance()->write( 'Site `' . $options['site title'] . '` added.' );
 
