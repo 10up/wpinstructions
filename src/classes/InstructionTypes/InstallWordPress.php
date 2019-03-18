@@ -268,17 +268,16 @@ class InstallWordPress extends InstructionType {
 
 		WordPressBridge::instance()->load( $global_args['path'], $extras );
 
-		if ( ! $wp_installed && $multisite ) {
+		if ( $multisite ) {
 			$site_user = get_user_by( 'email', $options['admin email'] );
 
-			UtilsWP\add_site_admins( $site_user );
-
-			update_site_option( 'siteurl', esc_url_raw( $options['site url'] ) );
-			update_site_option( 'home', esc_url_raw( $options['home url'] ) );
-		} else {
-			update_option( 'siteurl', esc_url_raw( $options['site url'] ) );
-			update_option( 'home', esc_url_raw( $options['home url'] ) );
+			if ( ! empty( $site_user ) ) {
+				UtilsWP\add_site_admins( $site_user );
+			}
 		}
+
+		update_option( 'siteurl', esc_url_raw( $options['site url'] ) );
+		update_option( 'home', esc_url_raw( $options['home url'] ) );
 
 		return 0;
 	}

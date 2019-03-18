@@ -46,6 +46,12 @@ if ( 'http://localhost' === $site_url ) {
 	$network_domain = parse_url( $site_url, PHP_URL_HOST );
 }
 
+$port = parse_url( $site_url, PHP_URL_PORT );
+
+if ( ! empty( $port ) ) {
+	$network_domain .= ':' . $port;
+}
+
 foreach ( $wpdb->tables( 'ms_global' ) as $table => $prefixed_table ) {
 	$wpdb->$table = $prefixed_table;
 }

@@ -100,6 +100,13 @@ class AddSite extends InstructionType {
 
 		if ( is_subdomain_install() ) {
 			$new_domain = parse_url( $options['home url'], PHP_URL_HOST );
+
+			$port = parse_url( $options['home url'], PHP_URL_PORT );
+
+			if ( ! empty( $post ) ) {
+				$new_domain .= ':' . $port;
+			}
+
 			$path       = get_network()->path;
 		} else {
 			$new_domain = get_network()->domain;
