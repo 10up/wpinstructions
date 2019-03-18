@@ -85,6 +85,18 @@ class AddSite extends InstructionType {
 			return 1;
 		}
 
+		if ( empty( $options['site url'] ) && empty( $options['home url'] ) ) {
+			Log::instance()->write( 'You need to provide a URL to add a site to the network.', 0, 'error' );
+
+			return 1;
+		}
+
+		if ( ! empty( $options['site url'] ) && empty( $options['home url'] ) ) {
+			$options['home url'] = $options['site url'];
+		} elseif ( empty( $options['site url'] ) && ! empty( $options['home url'] ) ) {
+			$options['site url'] = $options['home url'];
+		}
+
 		$user = get_user_by( 'email', $options['admin email'] );
 
 		if ( empty( $user ) ) {
