@@ -23,6 +23,9 @@ require_once ABSPATH . 'wp-includes/wp-db.php';
 
 $result = wp_install( $argv[2], $argv[3], $argv[4], true, '', $argv[5] );
 
+// Add uploads dir
+exec( 'mkdir ' . ABSPATH . 'wp-content' );
+
 if ( is_wp_error( $result ) ) {
 	exit( 1 );
 }
