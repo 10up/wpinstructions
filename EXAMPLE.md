@@ -14,3 +14,17 @@ install theme where name is twentynineteen
 install wordpress where type is multisite and url is http://wp.test
 add site where name is Site 2 and url is url is http://wp.test/two
 ```
+
+## Example 3
+
+```
+install wordpress where url is http://wp.test
+enable theme where name is twentyseventeen
+```
+
+## Example 4
+
+```
+install wordpress where url is http://wp.test
+activate plugin where name is akismet
+```

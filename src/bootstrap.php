@@ -22,6 +22,8 @@ Instruction::registerInstructionType( new InstructionTypes\InstallWordPress() );
 Instruction::registerInstructionType( new InstructionTypes\InstallPlugin() );
 Instruction::registerInstructionType( new InstructionTypes\InstallTheme() );
 Instruction::registerInstructionType( new InstructionTypes\AddSite() );
+Instruction::registerInstructionType( new InstructionTypes\ActivatePlugin() );
+Instruction::registerInstructionType( new InstructionTypes\EnableTheme() );
 
 $app->add( new Command\Run() );
 

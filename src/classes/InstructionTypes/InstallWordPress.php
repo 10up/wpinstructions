@@ -147,10 +147,13 @@ class InstallWordPress extends InstructionType {
 
 		Log::instance()->write( 'Moving WordPress files...', 1 );
 
+		// Remove old WP files
+		exec( 'cd ' . WPSnapshots\Utils\escape_shell_path( $global_args['path'] ) . ' && rm -rf wp-admin wp-includes index.php xmlrpc.php wp-activate.php wp-comments-post.php wp-config-sample.php wp-cron.php wp-links-opml.php wp-load.php wp-login.php wp-mail.php wp-settings.php wp-signup.php wp-trackback.php' );
+
 		if ( $skip_wpcontent ) {
 			exec( 'cd ' . WPSnapshots\Utils\escape_shell_path( $global_args['path'] ) . ' && mv wordpress/wp-*.php wordpress/wp-includes wordpress/wp-admin wordpress/index.php wordpress/xmlrpc.php .' );
 		} else {
-			exec( 'mv ' . WPSnapshots\Utils\escape_shell_path( $global_args['path'] ) . 'wordpress/* .' );
+			exec( 'rsync -r ' . WPSnapshots\Utils\escape_shell_path( $global_args['path'] ) . 'wordpress/* .' );
 		}
 
 		Log::instance()->write( 'Removing temporary WordPress files...', 1 );
