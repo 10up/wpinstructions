@@ -103,7 +103,7 @@ class AddSite extends InstructionType {
 
 			$port = parse_url( $options['home url'], PHP_URL_PORT );
 
-			if ( ! empty( $post ) ) {
+			if ( ! empty( $port ) ) {
 				$new_domain .= ':' . $port;
 			}
 
