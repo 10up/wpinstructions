@@ -245,10 +245,20 @@ class InstallWordPress extends InstructionType {
 			}
 		}
 
-		/**
-		 * Todo: If WP files are present with wp-config.php with MS constants BUT no tables exist. Bridge will fail since
-		 * MS tables don't exist yet.
-		 */
+		if ( ! $wp_installed && $multisite ) {
+			Log::instance()->write( 'Setting up multisite...', 1 );
+
+			$process = new Process( [ 'php', WPINSTRUCTIONS_DIR . '/src/subprocesses/createnetwork.php', $global_args['path'], $wp_config_path, $options['site url'], $options['admin email'], $options['site title'] ] );
+			$process->run();
+
+			if ( $process->isSuccessful() ) {
+				Log::instance()->write( 'Network created.', 1 );
+			} else {
+				Log::instance()->write( 'Failed to create network.', 0, 'error' );
+
+				return 1;
+			}
+		}
 
 		$extras = [];
 
@@ -258,60 +268,7 @@ class InstallWordPress extends InstructionType {
 
 		WordPressBridge::instance()->load( $global_args['path'], $extras );
 
-		global $wpdb;
-
 		if ( ! $wp_installed && $multisite ) {
-			Log::instance()->write( 'Setting up multisite...', 1 );
-
-			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-			$domain = preg_replace( '|https?://|', '', $options['site url'] );
-
-			if ( 'http://localhost' === $options['site url'] ) {
-				$domain = 'localhost';
-			} else {
-				$domain = parse_url( $options['site url'], PHP_URL_HOST );
-			}
-
-			foreach ( $wpdb->tables( 'ms_global' ) as $table => $prefixed_table ) {
-				$wpdb->$table = $prefixed_table;
-			}
-
-			install_network();
-
-			$result = populate_network(
-				1,
-				$domain,
-				$options['admin email'],
-				$options['site title'],
-				'/',
-				false
-			);
-
-			if ( true === $result ) {
-				Log::instance()->write( 'Set up multisite database tables.' );
-			} elseif ( is_wp_error( $result ) ) {
-				Log::instance()->write( 'Failed to install WordPress.', 0, 'error' );
-
-				return 1;
-			}
-
-			// delete_site_option() cleans the alloptions cache to prevent dupe option
-			delete_site_option( 'upload_space_check_disabled' );
-			update_site_option( 'upload_space_check_disabled', 1 );
-
-			$ms_constants = [
-				'WP_ALLOW_MULTISITE'   => true,
-				'MULTISITE'            => true,
-				'SUBDOMAIN_INSTALL'    => false,
-				'DOMAIN_CURRENT_SITE'  => $domain,
-				'PATH_CURRENT_SITE'    => '/',
-				'SITE_ID_CURRENT_SITE' => 1,
-				'BLOG_ID_CURRENT_SITE' => 1,
-			];
-
-			WPSnapshots\Utils\write_constants_to_wp_config( $ms_constants, $wp_config_path );
-
 			$site_user = get_user_by( 'email', $options['admin email'] );
 
 			UtilsWP\add_site_admins( $site_user );

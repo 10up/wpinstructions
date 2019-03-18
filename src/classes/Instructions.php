@@ -75,11 +75,11 @@ class Instructions {
 			$instruction_result = $instruction->run();
 
 			if ( 1 === $instruction_result ) {
-				Log::instance()->write( 'Instruction `' . $line . '` did not complete successfully.', 0, 'error' );
+				Log::instance()->write( 'Instruction `' . $instruction->getText() . '` did not complete successfully.', 0, 'error' );
 
 				return false;
 			} elseif ( 2 === $instruction_result ) {
-				Log::instance()->write( 'Instruction `' . $line . '` was skipped.', 0, 'warning' );
+				Log::instance()->write( 'Instruction `' . $instruction->getText() . '` was skipped.', 0, 'warning' );
 			}
 		}
 
