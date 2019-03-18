@@ -95,8 +95,10 @@ class ActivatePlugin extends InstructionType {
 			return 1;
 		}
 
+		$network_wide = false;
+
 		if ( 'network' === $options['active type'] ) {
-			$network_wide = 'network active' === $options['plugin status'];
+			$network_wide = true;
 		}
 
 		$result = activate_plugin( $plugin['path'], '', $network_wide );
