@@ -131,6 +131,22 @@ class AddSite extends InstructionType {
 
 		$id = wpmu_create_blog( $new_domain, $path, $options['site title'], $user->ID, $meta, get_current_network_id() );
 
+		// Weird core bug that strips : from domain. We can assume table prefix
+		global $wpdb;
+
+		$wpdb->update(
+			$wpdb->prefix . 'blogs',
+			[
+				'domain' => $new_domain,
+			],
+			[
+				'blog_id' => $id,
+			],
+			[
+				'%s',
+			]
+		);
+
 		if ( ! is_super_admin( $user->ID ) ) {
 			UtilsWP\add_site_admins( $user );
 		}
