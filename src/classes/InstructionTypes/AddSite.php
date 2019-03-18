@@ -26,7 +26,7 @@ class AddSite extends InstructionType {
 	 * @var array
 	 */
 	protected $defaults = [
-		'site title'      => 'New Site',
+		'site title'     => 'New Site',
 		'site url'       => '',
 		'home url'       => '',
 		'admin email'    => 'test@test.com',
@@ -50,6 +50,7 @@ class AddSite extends InstructionType {
 	protected function mapSubject( string $subject ) {
 		switch ( $subject ) {
 			case 'title':
+			case 'name':
 			case 'blog title':
 				return 'site title';
 			case 'home':
