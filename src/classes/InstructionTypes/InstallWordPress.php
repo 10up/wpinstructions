@@ -244,7 +244,7 @@ class InstallWordPress extends InstructionType {
 			Log::instance()->write( 'Process output: ' . $process->getOutput(), 2 );
 
 			if ( $process->isSuccessful() ) {
-				Log::instance()->write( 'WordPress installed.' );
+				Log::instance()->write( 'WordPress ' . $options['version'] .' installed.' );
 			} else {
 				Log::instance()->write( 'Failed to install WordPress.', 0, 'error' );
 
