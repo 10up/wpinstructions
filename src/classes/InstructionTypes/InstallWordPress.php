@@ -277,7 +277,9 @@ class InstallWordPress extends InstructionType {
 			$extras['DB_HOST'] = $global_args['db_host'];
 		}
 
-		WordPressBridge::instance()->load( $global_args['path'], $extras );
+		if ( 0 !== WordPressBridge::instance()->load( $global_args['path'], $extras ) ) {
+			return 1;
+		}
 
 		if ( $multisite ) {
 			$site_user = get_user_by( 'email', $options['admin email'] );
