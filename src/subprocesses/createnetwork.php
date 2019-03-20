@@ -33,6 +33,8 @@ require_once ABSPATH . 'wp-includes/wp-db.php';
 
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
+error_reporting( E_ERROR | E_WARNING | E_PARSE );
+
 $wp_config_path = $argv[2];
 $site_url       = $argv[3];
 $admin_email    = $argv[4];

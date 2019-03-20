@@ -236,15 +236,15 @@ class InstallWordPress extends InstructionType {
 		if ( $wp_installed ) {
 			Log::instance()->write( 'WordPress already installed.', 1 );
 		} else {
-			Log::instance()->write( 'Running process with args: ' . $global_args['path'] . ' ' . $options['site title'] . ' ' . $options['admin user'] . ' ' . $options['admin email'] . ' ' . WPSnapshots\Utils\escape_shell_path( $options['admin password'] ), 2 );
+			Log::instance()->write( 'Running process: php ' . WPINSTRUCTIONS_DIR . '/src/subprocesses/installwp.php "' . $global_args['path'] . '" "' . $options['site title'] . '" "' . $options['admin user'] . '" "' . $options['admin email'] . '" "' . $options['admin password'] . '"', 2 );
 
-			$process = new Process( [ 'php', WPINSTRUCTIONS_DIR . '/src/subprocesses/installwp.php', $global_args['path'], $options['site title'], $options['admin user'], $options['admin email'], WPSnapshots\Utils\escape_shell_path( $options['admin password'] ) ] );
+			$process = new Process( [ 'php', WPINSTRUCTIONS_DIR . '/src/subprocesses/installwp.php', $global_args['path'], $options['site title'], $options['admin user'], $options['admin email'], $options['admin password'] ] );
 			$process->run();
 
 			Log::instance()->write( 'Process output: ' . $process->getOutput(), 2 );
 
 			if ( $process->isSuccessful() ) {
-				Log::instance()->write( 'WordPress ' . $options['version'] .' installed.' );
+				Log::instance()->write( 'WordPress ' . $options['version'] . ' installed.' );
 			} else {
 				Log::instance()->write( 'Failed to install WordPress.', 0, 'error' );
 
@@ -255,7 +255,7 @@ class InstallWordPress extends InstructionType {
 		if ( ! $wp_installed && $multisite ) {
 			Log::instance()->write( 'Setting up multisite...', 1 );
 
-			Log::instance()->write( 'Running process with args: ' . $global_args['path'] . ' ' . $wp_config_path . ' ' . $options['site url'] . ' ' . $options['admin email'] . ' ' . $options['site title'], 2 );
+			Log::instance()->write( 'Running process: php ' . WPINSTRUCTIONS_DIR . '/src/subprocesses/createnetwork.php "' . $global_args['path'] . '" "' . $wp_config_path . '" "' . $options['site url'] . '" "' . $options['admin email'] . '" "' . $options['site title'] . '"', 2 );
 
 			$process = new Process( [ 'php', WPINSTRUCTIONS_DIR . '/src/subprocesses/createnetwork.php', $global_args['path'], $wp_config_path, $options['site url'], $options['admin email'], $options['site title'] ] );
 			$process->run();
