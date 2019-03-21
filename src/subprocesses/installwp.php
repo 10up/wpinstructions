@@ -30,6 +30,8 @@ function wp_new_blog_notification() {
 	// Do nothing
 }
 
+var_dump($wp_db_version);
+
 $result = wp_install( $argv[2], $argv[3], $argv[4], true, '', $argv[5] );
 
 // Add uploads dir
