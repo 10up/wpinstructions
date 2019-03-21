@@ -27,6 +27,8 @@ require_once ABSPATH . 'wp-includes/version.php';
 
 echo file_get_contents(ABSPATH . 'wp-includes/version.php');
 
+echo exec( 'cat ' . ABSPATH . 'wp-includes/version.php' );
+
 error_reporting( E_ERROR | E_WARNING | E_PARSE );
 
 /**
