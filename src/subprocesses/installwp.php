@@ -21,6 +21,8 @@ require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 /** Load wpdb */
 require_once ABSPATH . 'wp-includes/wp-db.php';
 
+require_once ABSPATH . 'wp-includes/version.php';
+
 error_reporting( E_ERROR | E_WARNING | E_PARSE );
 
 /**
