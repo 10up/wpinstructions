@@ -9,6 +9,8 @@ define( 'WP_INSTALLING', true );
 
 define( 'ABSPATH', $argv[1] );
 
+clearstatcache();
+
 /** Load WordPress Bootstrap */
 require_once ABSPATH . 'wp-load.php';
 

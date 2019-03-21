@@ -164,6 +164,8 @@ class InstallWordPress extends InstructionType {
 
 		Log::instance()->write( 'WordPress downloaded.' );
 
+		clearstatcache();
+
 		$config_constants = [
 			'DB_HOST'  => 'localhost',
 		];
