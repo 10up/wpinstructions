@@ -120,7 +120,7 @@ class AddSite extends InstructionType {
 				$new_domain .= ':' . $port;
 			}
 
-			$path       = get_network()->path;
+			$path = get_network()->path;
 		} else {
 			$new_domain = get_network()->domain;
 			$path       = rtrim( get_network()->path . parse_url( $options['home url'], PHP_URL_PATH ), '/' ) . '/';
