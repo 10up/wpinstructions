@@ -28,6 +28,8 @@ class InstallTheme extends InstructionType {
 	protected $defaults = [
 		'theme version' => 'latest',
 		'theme status'  => 'enabled',
+		'theme url'     => '',
+		'theme name'    => '',
 	];
 
 	/**
@@ -70,9 +72,6 @@ class InstallTheme extends InstructionType {
 	 */
 	protected function mapObject( string $object ) {
 		switch ( $subject ) {
-			case 'network activate':
-			case 'network':
-				return 'network active';
 			case 'activate':
 			case 'activated':
 			case 'active':
