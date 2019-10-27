@@ -9,7 +9,7 @@ namespace WPInstructions;
 
 use \Symfony\Component\Console\Application;
 
-$app = new Application( 'WP Instructions', '0.2' );
+$app = new Application( 'WP Instructions', '1.1' );
 
 define( 'WPINSTRUCTIONS_DIR', dirname( __DIR__ ) );
 
