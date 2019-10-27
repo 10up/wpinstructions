@@ -148,7 +148,7 @@ class InstallPlugin extends InstructionType {
 				$version = 'trunk';
 			}
 
-			$result = PackageManager::instance()->install_from_org( $options['plugin name'], $version );
+			$result = PackageManager::instance()->install_plugin_from_org( $options['plugin name'], $version );
 
 			if ( is_null( $result ) || is_wp_error( $result ) ) {
 				Log::instance()->write( 'Could not install plugin.', 0, 'error' );
