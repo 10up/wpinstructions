@@ -103,7 +103,7 @@ class Instruction {
 		if ( ! empty( $where_clause ) ) {
 			$where_clause = trim( preg_replace( '#^[\s]*where(.*)$#i', '$1', $where_clause ) );
 
-			$clauses = preg_split( '#and#i', $where_clause );
+			$clauses = preg_split( '#\sand\s#i', $where_clause );
 
 			foreach ( $clauses as $clause ) {
 				$clause = trim( $clause );
