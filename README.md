@@ -1,8 +1,8 @@
 # WP Instructions
 
-*THIS SOFTWARE IS BETA.*
+> WP Instructions lets you execute WordPress actions in human-readable format e.g. installing WordPress, activating plugins, etc. WP Instruction files can be provided to developers to ease local development setup and improve environment consistency.
 
-WP Instructions lets you execute WordPress actions in human-readable format e.g. installing WordPress, activating plugins, etc. WP Instruction files can be provided to developers to ease local development setup and improve environment consistency.
+[![Support Level](https://img.shields.io/badge/support-beta-blueviolet.svg)](#support-level)
 
 ## Requirements
 
@@ -79,6 +79,10 @@ Enable a theme.
 ## Examples
 
 See examples in [EXAMPLES.md](EXAMPLES.md).
+
+## Support Level
+
+**Beta:** This project is quite new and we're not sure what our ongoing support level for this will be. Bug reports, feature requests, questions, and pull requests are welcome. If you like this project please let us know, but be cautious using this in a Production environment!
 
 ## Like what you see?
 
