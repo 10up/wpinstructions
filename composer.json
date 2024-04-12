@@ -38,5 +38,6 @@
   },
   "require-dev": {
     "10up/phpcs-composer": "dev-master"
-  }
+  },
+  "abandoned": true
 }
